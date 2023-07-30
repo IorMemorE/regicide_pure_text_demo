@@ -1,7 +1,8 @@
-import sys,os
+import sys
+import os
 from inspect import cleandoc
-from stdpile import HandCards,CardPile,BossList
-from userop import UserOperate,OpKind
+from stdpile import HandCards, CardPile, BossList
+from userop import UserOperate, OpKind
 
 if sys.platform == "win32":
     def clear_screen():
@@ -178,7 +179,7 @@ def GameLogic():
     discard_lib = CardPile.make_empty_init()
     boss_list = BossList.make_init()
     hand_cards = HandCards.make_init()
-    hand_cards.take_n_from(8,8, user_lib)
+    hand_cards.take_n_from(8, 8, user_lib)
 
     refresh_times = 2
     guards = 0
@@ -230,7 +231,7 @@ def GameLogic():
                     if super_card.has_club():
                         boss.suffer(super_card.point)
                     if super_card.has_diamond():
-                        hand_cards.take_n_from(super_card.point,8, user_lib)
+                        hand_cards.take_n_from(super_card.point, 8, user_lib)
 
                 case OpKind.Refresh:
                     if refresh_times == 0:
@@ -239,7 +240,7 @@ def GameLogic():
                         continue
 
                     hand_cards.discard_all_to(discard_lib)
-                    hand_cards.take_n_from(8,8,user_lib)
+                    hand_cards.take_n_from(8, 8, user_lib)
 
                 case OpKind.GiveUp:
                     stage = 0
@@ -285,12 +286,12 @@ def GameLogic():
                             stage = 1
                             print("你可能弃了你没有的牌，请重新输入")
                             continue
-                        
+
                         if uop.count_point() < discard_cnt:
                             stage = 1
                             print("弃牌点数不足，请重新输入")
                             continue
-                        
+
                         hand_cards.discard_to(discard_lib, uop.card_list)
 
                     case OpKind.Refresh:
@@ -298,9 +299,9 @@ def GameLogic():
                             stage = 1
                             print("没有刷新次数了，请重新输入")
                             continue
-                        
+
                         hand_cards.discard_all_to(discard_lib)
-                        hand_cards.take_n_from(8,8, user_lib)
+                        hand_cards.take_n_from(8, 8, user_lib)
                     case OpKind.GiveUp:
                         is_finish = -1
                         break
@@ -328,5 +329,3 @@ def GameLogic():
         print("你输了")
 
     ReturnMenuLogic()
-
-

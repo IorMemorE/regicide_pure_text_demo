@@ -1,6 +1,7 @@
-from enum import Enum 
+from enum import Enum
 from parse_error import ParseError
 from typing import Self
+
 
 class PokeSuit(Enum):
     Spade = 1  # 黑桃 ♠
@@ -12,6 +13,7 @@ class PokeSuit(Enum):
 
     def as_int(self) -> int:
         return self.value
+
     def __eq__(self, other: Self) -> bool:
         return self.as_int() == other.as_int()
 
@@ -77,7 +79,7 @@ class PokePoint:
                 p = int(p)
                 assert (1 < p and p <= 10)
                 return cls(p)
-    
+
     def __eq__(self, other: Self) -> bool:
         return self.as_int == other.as_int
 
@@ -119,14 +121,13 @@ class UserCard(PokeCard):
 
     def is_pet(self) -> bool:
         return self.Point.as_int == 1
-    
+
     def is_joker(self) -> bool:
         return self.Suit == PokeSuit.Joker
-    
 
     @classmethod
     def make_joker(cls):
-        return cls(PokeCard(PokeSuit.Joker,PokePoint(0))) 
+        return cls(PokeCard(PokeSuit.Joker, PokePoint(0)))
 
     def __repr__(self) -> str:
         return f"Card{{{self.Suit} {self.Point}}}"
@@ -136,7 +137,7 @@ class UserCard(PokeCard):
 
     def __eq__(self, other: Self) -> bool:
         return super().__eq__(other)
-    
+
     def show(self) -> str:
         return f"{self.Suit.show()} {self.Point.show()}"
 
@@ -174,6 +175,6 @@ class BossCard(PokeCard):
 
     def __str__(self) -> str:
         return repr(self)
-    
+
     def show(self) -> str:
         return f"Boss {self.Suit.show()} {self.AG} {self.HP}"

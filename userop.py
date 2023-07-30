@@ -3,6 +3,7 @@ from parse_error import ParseError
 from typing import Iterator
 from stdcard import UserCard, PokeCard, PokeSuit
 
+
 class OpKind(Enum):
     Invalid = 0
     Put = 1

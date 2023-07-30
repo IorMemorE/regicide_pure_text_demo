@@ -40,7 +40,7 @@ class CardPile:
         self.__inner = deque(cards)
 
     @classmethod
-    def make_user_lib_init(cls,jokers :int):
+    def make_user_lib_init(cls, jokers: int):
         ls = [UserCard(PokeCard(PokeSuit(suit + 1), PokePoint(point + 1)))
               for suit in range(0, 4) for point in range(0, 10)]
         for _ in range(jokers):
@@ -75,8 +75,6 @@ class CardPile:
         cnt = min(n, len(discard_pile))
         for _ in range(cnt):
             self.push_back(discard_pile.pop_back())
-
-    
 
 
 class HandCards:
@@ -128,4 +126,3 @@ class HandCards:
         for card in cards:
             self.has.remove(card)
             discard_pile.push_back(card)
-
