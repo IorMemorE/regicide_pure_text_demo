@@ -374,6 +374,9 @@ class UserOperate:
     def merge(self) -> MergedCard:
         return MergedCard(self.card_list)
 
+    def count_point(self) -> int:
+        return sum(map(lambda card: card.Point.as_int, self.card_list),0)
+
 
 class HandCards:
     __slots__ = ["has"]
@@ -620,7 +623,11 @@ def GameLogic():
                     if not hand_cards.is_contains_all(uop.card_list):
                         send_failure("Nonexistent Cards")
                         return
-
+                    
+                    if uop.count_point() < discard_cnt:
+                        send_failure("Points Not Enough")
+                        return
+                    
                     hand_cards.discard_to(discard_lib, uop.card_list)
 
                 case OpKind.Refresh:
