@@ -1,13 +1,17 @@
 ﻿# Regicide 弑君者
 
 [桌游官网](https://badgersfrommars.com/)
+
 [官方手游](https://play.google.com/store/apps/details?id=com.bfm.regicidecompanion)
 
 ## 说明
+
 将来适用于刚啵元宇宙气象研究院网络对战平台
+
 目前只支持单人模式
 
 `main.py`为命令行Demo
+
 `judge.py` 为将来的裁判机版本
 
 由于对战平台限制只能提交单一文件，所以没有写成分库的形式
