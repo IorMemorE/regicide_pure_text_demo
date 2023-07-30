@@ -7,16 +7,14 @@ from stdcard import UserCard, PokeCard, PokeSuit
 class OpKind(Enum):
     Invalid = 0
     Put = 1
-    Discard = 2
-    Refresh = 3
-    GiveUp = 4
+    Pass = 2
+    GiveUp = 3
 
     @classmethod
     def parse_from(cls, s: str):
         match s:
             case "put": return cls.Put
-            case "discard": return cls.Discard
-            case "refresh": return cls.Refresh
+            case "pass": return cls.Pass
             case "giveup": return cls.GiveUp
             case _: return cls.Invalid
 
@@ -70,15 +68,7 @@ class UserOperate:
 
         self.kind = OpKind.parse_from(next(siter).strip())
         match self.kind:
-            case OpKind.Invalid: self.card_list = []
-            case OpKind.Refresh | OpKind.GiveUp:
-                try:
-                    _ = next(siter)
-                except:
-                    return
-                else:
-                    self.kind = OpKind.Invalid
-            case _:
+            case OpKind.Put:
                 try:
                     self.card_list = card_list_from_iter(siter)
                     assert (len(self.card_list) != 0)
@@ -86,6 +76,15 @@ class UserOperate:
                     self.kind = OpKind.Invalid
                 else:
                     return
+            case OpKind.Pass | OpKind.GiveUp:
+                try:
+                    _ = next(siter)
+                except:
+                    return
+                else:
+                    self.kind = OpKind.Invalid
+            case _:
+                self.card_list = []
 
     def put_check(self) -> bool:
         assert (self.kind == OpKind.Put)
