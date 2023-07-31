@@ -3,6 +3,8 @@ from random import shuffle
 from stdcard import BossCard, UserCard, PokeCard, PokeSuit, PokePoint
 from collections import deque
 
+from usermode import UserMode
+
 
 class BossList:
     __slots__ = ["__inner"]
@@ -40,10 +42,10 @@ class CardPile:
         self.__inner = deque(cards)
 
     @classmethod
-    def make_user_lib_init(cls, jokers: int):
+    def make_user_lib_init(cls, usermode:UserMode):
         ls = [UserCard(PokeCard(PokeSuit(suit + 1), PokePoint(point + 1)))
               for suit in range(0, 4) for point in range(0, 10)]
-        for _ in range(jokers):
+        for _ in range(usermode.jokers):
             ls.append(UserCard.make_joker())
         shuffle(ls)
         return cls(ls)

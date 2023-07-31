@@ -21,15 +21,6 @@ from typing import Iterator, Self
 class ParseError(BaseException):
     ...
 
-
-class PokeColor(Enum):
-    Red = 0
-    Black = 1
-
-    def as_int(self) -> int:
-        return self.value
-
-
 class PokeSuit(Enum):
     Spade = 1  # 黑桃
     Heart = 2  # 红桃
@@ -40,14 +31,11 @@ class PokeSuit(Enum):
     单人模式目前还没用，多人模式还没开发出来
     所以临时占位罢了
     """
-    Joker = 0  # 王牌
+    # Joker = 0  # 王牌
     # Clown = 9  # 还是王牌
 
     def as_int(self) -> int:
         return self.value
-
-    def color(self) -> PokeColor:
-        return PokeColor(self.value % 2)
 
     def __repr__(self) -> str:
         match self.value:
@@ -55,11 +43,12 @@ class PokeSuit(Enum):
             case 2: return "H"
             case 3: return "C"
             case 4: return "D"
-            case _: return "*"
+            # case _: return "*"
 
     def __str__(self) -> str:
         return repr(self)
-
+    def __eq__(self, other :Self) -> bool:
+        return self.as_int() == other.as_int()
     @classmethod
     def parse_from_str(cls, ssuit: str):
         match ssuit:
@@ -77,7 +66,7 @@ class PokeSuit(Enum):
             case 2: return "H"
             case 3: return "C"
             case 4: return "D"
-            case _: return "*"
+            # case _: return "*"
 
 
 class PokePoint:
@@ -93,12 +82,15 @@ class PokePoint:
             case 20: return "Q"
             case 25: return "K"
             case p:
-                assert (1 < p and p <= 10)
                 return f"{p}"
 
     def __str__(self) -> str:
         return repr(self)
 
+
+    def __eq__(self, other :Self) -> bool:
+        return self.as_int == other.as_int
+    
     @classmethod
     def parse_from_str(cls, spoint: str):
         match spoint:
@@ -138,8 +130,7 @@ class PokeCard:
         return cls(PokeSuit.parse_from_str(ssuit), PokePoint.parse_from_str(spoint))
 
     def __eq__(self, other: Self) -> bool:
-        return (self.Suit.as_int() == other.Suit.as_int()
-                and self.Point.as_int == other.Point.as_int)
+        return self.Suit == other.Suit and self.Point == other.Point
 
 
 class UserCard(PokeCard):

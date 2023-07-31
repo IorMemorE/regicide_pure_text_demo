@@ -1,6 +1,7 @@
 import sys
 import os
 from stdpile import HandCards, CardPile, BossList
+from usermode import UserMode
 from userop import UserOperate, OpKind
 from game_txt import hello_txt, menu_txt, rule_txt, kill_txt, help_txt
 if sys.platform == "win32":
@@ -67,14 +68,16 @@ def ReturnMenuLogic():
 def ChooseLogic():
     while True:
         players_number = input("输入游戏人数以开始：")
-        if int(players_number) != 1:
-            print("目前只能单打喵")
+        try : players_number = int(players_number)
+        except:
+            print("无效输入")
         else:
             return GameLogic()
 
 
 def GameLogic():
-    user_lib = CardPile.make_user_lib_init(0)
+    um = UserMode(1)
+    user_lib = CardPile.make_user_lib_init(um)
     discard_lib = CardPile.make_empty_init()
     boss_list = BossList.make_init()
     hand_cards = HandCards.make_init()
